@@ -1,18 +1,25 @@
-mod utils;
+#[macro_use]
+extern crate lazy_static;
+
+use std::collections::HashMap;
 
 use rand::Rng;
 use regex::Regex;
 use wasm_bindgen::prelude::*;
 
-// // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// // allocator.
-// #[cfg(feature = "wee_alloc")]
-// #[global_allocator]
-// static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+lazy_static! {
+  static ref ALL_WORD: HashMap<i32, Vec<&'static str>> = {
+    let mut m = HashMap::new();
+    m.insert(5, get_word_from_file(include_str!("5_letter_words.txt")));
+    m.insert(6, get_word_from_file(include_str!("6_letter_words.txt")));
+    m
+  };
+}
 
-static ALL_5: &'static str = include_str!("5_char_words.txt");
-static ALL_6: &'static str = include_str!("6_char_words.txt");
-static ALL_7: &'static str = include_str!("7_char_words.txt");
+fn get_word_from_file(target: &'static str) -> Vec<&'static str> {
+  // let target = format!("{}_char_words.txt", len);
+  target.split(",").collect::<Vec<&'static str>>()
+}
 
 #[wasm_bindgen]
 extern "C" {
@@ -27,15 +34,9 @@ pub fn get_word(input: String, target: i32) -> String {
   let regex = Regex::new(&regex_str).unwrap();
   let mut match_case: Vec<String> = vec![];
 
-  let all = if target == 5 {
-    ALL_5
-  } else if target == 6 {
-    ALL_6
-  } else {
-    ALL_7
-  };
+  let all = ALL_WORD.get(&target).unwrap();
 
-  for text in all.split("\n").collect::<Vec<&str>>() {
+  for text in all {
     // println!("{}", text);
 
     if regex.is_match(&text) {
