@@ -1,0 +1,15 @@
+{
+  "name": "rust-wasm-hangman",
+  "collaborators": [
+    "Deep Sea Penguin <leejiale456@gmail.com>"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "rust_wasm_hangman_bg.wasm",
+    "rust_wasm_hangman.js",
+    "rust_wasm_hangman.d.ts"
+  ],
+  "module": "rust_wasm_hangman.js",
+  "types": "rust_wasm_hangman.d.ts",
+  "sideEffects": false
+}
