@@ -1,1 +1,0 @@
-wasm-pack build --target web --release && xcopy /s/y pkg www && del pkg
