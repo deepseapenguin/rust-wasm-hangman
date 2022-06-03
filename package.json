@@ -1,7 +1,0 @@
-{
-  "name": "rust-wasm-hangman",
-  "version": "1.0.0",
-  "main": "index.js",
-  "author": "Deep Sea Penguin <leejiale456@gmail.com>",
-  "license": "MIT"
-}
